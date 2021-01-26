@@ -33,6 +33,14 @@ public class EntregaController {
         return entregaService.findMinhasSolicitacoes(usuario, page, linesPerPage);
     }
 
+    @GetMapping("{usuario}/minhasolicitacoesentrega")
+    public Page<Entrega> findMinhasSolicitacoesEntrega(@PathVariable Integer usuario,
+                                                @RequestParam(value="page", defaultValue = "0")Integer page,
+                                                @RequestParam(value="linesPerPage", defaultValue = "10")Integer linesPerPage) {
+
+        return entregaService.findMinhasSolicitacoesEntrega(usuario, page, linesPerPage);
+    }
+
     @PostMapping()
     public Integer insert(@RequestBody EntregaDTO objDTO){
         return entregaService.insert(objDTO);

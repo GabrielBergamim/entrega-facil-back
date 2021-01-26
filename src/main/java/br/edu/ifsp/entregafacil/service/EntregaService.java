@@ -47,6 +47,12 @@ public class EntregaService {
         return repository.findMinhasSolicitacoes(usuario, pageRequest);
     }
 
+    public Page<Entrega> findMinhasSolicitacoesEntrega(Integer usuario, Integer page, Integer linesPerPage) {
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage);
+
+        return repository.findMinhasSolicitacoesEntrega(usuario, pageRequest);
+    }
+
     public Integer insert(EntregaDTO entrega) {
         Entrega entity = new Entrega();
         Usuario solicitante = new Usuario();
