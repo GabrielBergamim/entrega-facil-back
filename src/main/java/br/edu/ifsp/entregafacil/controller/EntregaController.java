@@ -17,6 +17,12 @@ public class EntregaController {
     @Autowired
     private EntregaService entregaService;
 
+    @GetMapping("{codigo}")
+    public Entrega findPage(@PathVariable Integer codigo) {
+
+        return entregaService.findById(codigo);
+    }
+
     @GetMapping("{usuario}/solicitacoesabertas")
     public Page<Entrega> findPage(@PathVariable Integer usuario,
                                   @RequestParam(value="page", defaultValue = "0")Integer page,
@@ -47,8 +53,8 @@ public class EntregaController {
     }
 
     @PutMapping("{entregador}/{solicitacao}")
-    public void alterarStatus(@PathVariable Integer entregador, @PathVariable Integer solicitacao) {
-        entregaService.alterarStatus(entregador, solicitacao);
+    public Entrega alterarStatus(@PathVariable Integer entregador, @PathVariable Integer solicitacao) {
+        return entregaService.alterarStatus(entregador, solicitacao);
     }
 
 

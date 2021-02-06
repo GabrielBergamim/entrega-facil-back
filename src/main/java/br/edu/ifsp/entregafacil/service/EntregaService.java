@@ -88,15 +88,15 @@ public class EntregaService {
         return entity.getId();
     }
 
-    public void alterarStatus(Integer codigoEntregador, Integer codigoEntrega) {
+    public Entrega alterarStatus(Integer codigoEntregador, Integer codigoEntrega) {
         Entrega entrega = repository.findById(codigoEntrega).orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado! Id: " + codigoEntrega + ", Tipo: " + Entrega.class.getName()));
 
         Usuario entregador = usuarioRepository.findById(codigoEntregador).orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado! Id: " + codigoEntregador + ", Tipo: " + Usuario.class.getName()));
 
-        Usuario usuario = usuarioRepository.findById(entrega.getId()).orElseThrow(() -> new ObjectNotFoundException(
-                "Objeto não encontrado! Id: " + entrega.getId() + ", Tipo: " + Usuario.class.getName()));
+        Usuario usuario = usuarioRepository.findById(entrega.getSolicitante().getId()).orElseThrow(() -> new ObjectNotFoundException(
+                "Objeto não encontrado! Id: " + entrega.getSolicitante().getId() + ", Tipo: " + Usuario.class.getName()));
 
         String statusDe = entrega.getStatus().toString();
 
@@ -108,6 +108,15 @@ public class EntregaService {
                 throw new DataIntegrityException("Status da entrega não pode ser atualizado!");
         }
 
-       emailService.sendAtualizacaoStatus(entrega, usuario, entregador, statusDe);
+       //emailService.sendAtualizacaoStatus(entrega, usuario, entregador, statusDe);
+
+        return entrega;
+    }
+
+    public Entrega findById(Integer codigo) {
+        Entrega entrega = repository.findById(codigo).orElseThrow(() -> new ObjectNotFoundException(
+                "Objeto não encontrado! Id: " + codigo + ", Tipo: " + Entrega.class.getName()));
+
+        return entrega;
     }
 }
